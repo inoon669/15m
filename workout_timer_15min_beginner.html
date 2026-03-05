@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>טיימר אימון 15 דקות – מתחילות (ללא ציוד)</title>
+  <style>
+    :root{
+      --bg:#f5f3ef;
+      --card:#ffffff;
+      --ink:#1f1f1f;
+      --muted:#5b5b5b;
+      --turq:#18b7c5;
+      --purple:#b59cff;
+      --shadow:0 14px 38px rgba(0,0,0,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Arial;
+      background:
+        radial-gradient(1200px 600px at 15% 0%, rgba(24,183,197,.18), transparent 60%),
+        radial-gradient(1200px 600px at 85% 15%, rgba(181,156,255,.18), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+    }
+    .wrap{max-width:1040px;margin:0 auto;padding:18px}
+    .top{display:flex;gap:14px;align-items:center;justify-content:space-between;margin:10px 0 14px;}
+    .brand{display:flex;flex-direction:column;gap:4px}
+    .brand h1{margin:0;font-size:20px;font-weight:900}
+    .brand p{margin:0;color:var(--muted);font-size:14px}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(24,183,197,.18), rgba(181,156,255,.18));font-weight:900;font-size:13px;width:fit-content}
+    .title{font-size:28px;font-weight:950;margin:0}
+    .note{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+    .timeRow{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:10px 0 0;}
+    .bigTime{font-size:62px;font-weight:950;letter-spacing:1px}
+    .small{color:var(--muted);font-size:13px}
+    .progressOuter{height:12px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden}
+    .progressInner{height:100%;width:0%;background:linear-gradient(90deg,var(--turq),var(--purple))}
+    .btnRow{display:flex;gap:10px;flex-wrap:wrap}
+    button{border:0;border-radius:16px;padding:12px 14px;font-weight:900;background:rgba(0,0,0,.06);color:var(--ink);cursor:pointer}
+    button.primary{background:linear-gradient(90deg,var(--turq),var(--purple));color:#fff}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .imgSlot{border-radius:18px;overflow:hidden;background:rgba(0,0,0,.04);padding:10px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,.04)}
+    .item strong{font-size:14px}
+    .item span{color:var(--muted);font-size:13px}
+    .item.active{outline:3px solid rgba(24,183,197,.35);background:rgba(24,183,197,.10)}
+    .pill{padding:6px 10px;border-radius:999px;font-weight:950;font-size:12px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+    .footer{margin-top:14px;color:var(--muted);font-size:12px;line-height:1.55}
+    .toggle{display:flex;gap:10px;align-items:center;justify-content:flex-end}
+    .toggle input{transform:scale(1.2)}
+    .mono{font-variant-numeric:tabular-nums}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <h1>טיימר אימון 15 דקות למתחילות</h1>
+        <p>ללא ציוד • קצב נעים • מתאים גם בבית</p>
+      </div>
+      <div class="toggle">
+        <label class="small"><input id="sound" type="checkbox" checked> צליל מעבר</label>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="badge" id="phaseBadge">מוכן להתחיל</div>
+        <h2 class="title" id="exerciseTitle">לחצי על Start</h2>
+        <p class="note" id="exerciseNote">האימון בנוי מחימום (3 דק׳), אימון מרכזי (10 דק׳), ושחרור (2 דק׳).</p>
+
+        <div class="imgSlot" id="imgSlot"><svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+      .muscle{fill:#e53935;opacity:.9}
+      .muted{fill:#111;opacity:.05}
+      .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>
+  <circle cx="220" cy="150" r="38" class="line"/>
+  <path d="M178 152 C190 105, 252 105, 262 152" class="line"/>
+  <path d="M178 150 C205 190, 235 190, 262 150" class="line"/>
+  <path d="M220 190 L220 290" class="line"/>
+  <path d="M220 215 C170 220, 150 255, 140 295" class="line"/>
+  <path d="M220 215 C270 220, 290 255, 300 295" class="line"/>
+  <path d="M140 295 L120 330" class="line"/>
+  <path d="M300 295 L320 330" class="line"/>
+  <path d="M185 290 L255 290 L275 350 L165 350 Z" class="line"/>
+  <path d="M200 350 L185 410" class="line"/>
+  <path d="M240 350 L255 410" class="line"/>
+  <ellipse cx="190" cy="240" rx="30" ry="22" class="muscle"/>
+  <ellipse cx="250" cy="240" rx="30" ry="22" class="muscle"/>
+  <ellipse cx="205" cy="310" rx="26" ry="18" class="muscle"/>
+  <ellipse cx="235" cy="310" rx="26" ry="18" class="muscle"/>
+  <path d="M430 140 C520 60, 630 70, 680 150" class="line"/>
+  <path d="M675 150 L650 140" class="line"/>
+  <path d="M675 150 L660 170" class="line"/>
+  <text x="420" y="230" class="txt">חימום דינמי</text>
+  <text x="420" y="275" class="txt" style="font-weight:500; font-size:26px; fill:#444">העלאת דופק + שחרור מפרקים</text>
+</svg></div>
+
+        <div class="timeRow">
+          <div>
+            <div class="bigTime mono" id="timeLeft">00:30</div>
+            <div class="small">נותר בתרגיל</div>
+          </div>
+          <div style="text-align:left">
+            <div class="small">הבא</div>
+            <div style="font-weight:950" id="nextName">—</div>
+            <div class="small mono" id="totalLeft">סה״כ נותר: 15:00</div>
+          </div>
+        </div>
+
+        <div class="progressOuter" aria-hidden="true">
+          <div class="progressInner" id="prog"></div>
+        </div>
+
+        <div class="btnRow" style="margin-top:12px">
+          <button class="primary" id="startBtn">Start</button>
+          <button id="pauseBtn" disabled>Pause</button>
+          <button id="resetBtn">Reset</button>
+          <button id="skipBtn" disabled>דלגי קדימה</button>
+        </div>
+
+        <div class="footer">
+          טיפ בטיחות: אם יש כאב חד – עוצרים. אפשר להקטין טווח תנועה או לבחור גרסה קלה יותר (למשל פלאנק על ברכיים).
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 10px;font-size:18px;font-weight:950">רשימת התרגילים והזמנים</h3>
+        <div class="list" id="list"></div>
+        <div class="footer">
+          חימום: 6×30ש׳ = 3:00. אימון מרכזי: 3 סבבים (30ש׳ עבודה + 20ש׳ מנוחה לכל תרגיל). שחרור: 2:00.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const PLAN = [{"type": "work", "name": "הליכה במקום", "duration": 30, "svg": "warmup", "note": "זקוף, תנועת ידיים טבעית"}, {"type": "work", "name": "סיבובי כתפיים וידיים", "duration": 30, "svg": "warmup", "note": "15 שנ׳ קדימה + 15 שנ׳ אחורה"}, {"type": "work", "name": "סיבובי אגן", "duration": 30, "svg": "warmup", "note": "15 שנ׳ לכל כיוון"}, {"type": "work", "name": "ג׳אמפינג ג׳קס קלים", "duration": 30, "svg": "warmup", "note": "אפשר בלי קפיצה, צעד-צעד"}, {"type": "work", "name": "הרמת ברכיים במקום", "duration": 30, "svg": "warmup", "note": "גובה נוח, נשימה רגועה"}, {"type": "work", "name": "מתיחה דינמית עדינה לרגליים", "duration": 30, "svg": "warmup", "note": "לא להגיע לכאב"}, {"type": "section", "name": "אימון מרכזי – 3 סבבים", "duration": 0, "svg": "warmup", "note": "30 שנ׳ עבודה + 20 שנ׳ מנוחה לכל תרגיל"}, {"type": "round", "name": "סבב 1", "duration": 0, "svg": "warmup", "note": ""}, {"type": "work", "name": "סקוואט בסיסי", "duration": 30, "svg": "squat", "note": "גב ישר, ברכיים לכיוון אצבעות הרגליים"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "שכיבות סמיכה על הקיר", "duration": 30, "svg": "wall_pushup", "note": "גוף בקו אחד, בטן אסופה"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "לאנג׳ קדימה", "duration": 30, "svg": "lunge", "note": "ברך קדמית מעל קרסול, גב זקוף"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "פלאנק על אמות", "duration": 30, "svg": "plank", "note": "ליבה אסופה, צוואר ארוך (אפשר ברכיים)"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "round", "name": "סבב 2", "duration": 0, "svg": "warmup", "note": ""}, {"type": "work", "name": "סקוואט בסיסי", "duration": 30, "svg": "squat", "note": "גב ישר, ברכיים לכיוון אצבעות הרגליים"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "שכיבות סמיכה על הקיר", "duration": 30, "svg": "wall_pushup", "note": "גוף בקו אחד, בטן אסופה"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "לאנג׳ קדימה", "duration": 30, "svg": "lunge", "note": "ברך קדמית מעל קרסול, גב זקוף"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "פלאנק על אמות", "duration": 30, "svg": "plank", "note": "ליבה אסופה, צוואר ארוך (אפשר ברכיים)"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "round", "name": "סבב 3", "duration": 0, "svg": "warmup", "note": ""}, {"type": "work", "name": "סקוואט בסיסי", "duration": 30, "svg": "squat", "note": "גב ישר, ברכיים לכיוון אצבעות הרגליים"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "שכיבות סמיכה על הקיר", "duration": 30, "svg": "wall_pushup", "note": "גוף בקו אחד, בטן אסופה"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "לאנג׳ קדימה", "duration": 30, "svg": "lunge", "note": "ברך קדמית מעל קרסול, גב זקוף"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "work", "name": "פלאנק על אמות", "duration": 30, "svg": "plank", "note": "ליבה אסופה, צוואר ארוך (אפשר ברכיים)"}, {"type": "rest", "name": "מנוחה", "duration": 20, "svg": "warmup", "note": "נשימה, להתארגן לתרגיל הבא"}, {"type": "section", "name": "שחרור – 2 דקות", "duration": 0, "svg": "stretch", "note": "מתיחות ונשימות בקצב רגוע"}, {"type": "work", "name": "מתיחות ונשימות", "duration": 120, "svg": "stretch", "note": "נשימה עמוקה, תנועה איטית ונעימה"}, {"type": "done", "name": "סיום", "duration": 0, "svg": "stretch", "note": "כל הכבוד! הגוף יגיד תודה ❤️"}];
+
+const SVG_MAP = {
+  warmup: `<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">   <defs>     <style>       .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}       .muscle{fill:#e53935;opacity:.9}       .muted{fill:#111;opacity:.05}       .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}     </style>   </defs>   <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>   <circle cx="220" cy="150" r="38" class="line"/>   <path d="M178 152 C190 105, 252 105, 262 152" class="line"/>   <path d="M178 150 C205 190, 235 190, 262 150" class="line"/>   <path d="M220 190 L220 290" class="line"/>   <path d="M220 215 C170 220, 150 255, 140 295" class="line"/>   <path d="M220 215 C270 220, 290 255, 300 295" class="line"/>   <path d="M140 295 L120 330" class="line"/>   <path d="M300 295 L320 330" class="line"/>   <path d="M185 290 L255 290 L275 350 L165 350 Z" class="line"/>   <path d="M200 350 L185 410" class="line"/>   <path d="M240 350 L255 410" class="line"/>   <ellipse cx="190" cy="240" rx="30" ry="22" class="muscle"/>   <ellipse cx="250" cy="240" rx="30" ry="22" class="muscle"/>   <ellipse cx="205" cy="310" rx="26" ry="18" class="muscle"/>   <ellipse cx="235" cy="310" rx="26" ry="18" class="muscle"/>   <path d="M430 140 C520 60, 630 70, 680 150" class="line"/>   <path d="M675 150 L650 140" class="line"/>   <path d="M675 150 L660 170" class="line"/>   <text x="420" y="230" class="txt">חימום דינמי</text>   <text x="420" y="275" class="txt" style="font-weight:500; font-size:26px; fill:#444">העלאת דופק + שחרור מפרקים</text> </svg>`,
+  squat: `<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">   <defs>     <style>       .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}       .muscle{fill:#e53935;opacity:.95}       .muted{fill:#111;opacity:.05}       .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}     </style>   </defs>   <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>   <circle cx="230" cy="140" r="34" class="line"/>   <path d="M205 142 C210 110, 250 110, 258 140" class="line"/>   <path d="M205 142 C220 175, 242 175, 258 140" class="line"/>   <path d="M230 175 L260 240" class="line"/>   <path d="M250 210 L330 210" class="line"/>   <path d="M330 210 L370 220" class="line"/>   <path d="M255 240 L315 240 L335 280 L245 280 Z" class="line"/>   <path d="M260 280 L235 360" class="line"/>   <path d="M305 280 L330 360" class="line"/>   <path d="M235 360 L205 365" class="line"/>   <path d="M330 360 L360 365" class="line"/>   <ellipse cx="260" cy="305" rx="22" ry="34" class="muscle"/>   <ellipse cx="305" cy="305" rx="22" ry="34" class="muscle"/>   <ellipse cx="285" cy="265" rx="30" ry="20" class="muscle"/>   <text x="440" y="210" class="txt">סקוואט בסיסי</text>   <text x="440" y="255" class="txt" style="font-weight:500; font-size:26px; fill:#444">גב ישר • ישבן לאחור</text> </svg>`,
+  wall_pushup: `<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">   <defs>     <style>       .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}       .muscle{fill:#e53935;opacity:.95}       .muted{fill:#111;opacity:.05}       .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}     </style>   </defs>   <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>   <path d="M600 70 L600 400" class="line"/>   <circle cx="280" cy="135" r="32" class="line"/>   <path d="M255 136 C260 110, 300 110, 308 135" class="line"/>   <path d="M255 136 C270 165, 292 165, 308 135" class="line"/>   <path d="M290 165 L420 250" class="line"/>   <path d="M360 220 L520 200" class="line"/>   <path d="M520 200 L600 200" class="line"/>   <path d="M375 235 L520 245" class="line"/>   <path d="M520 245 L600 245" class="line"/>   <path d="M405 245 L455 275 L430 315 L380 290 Z" class="line"/>   <path d="M410 305 L350 370" class="line"/>   <path d="M430 315 L380 390" class="line"/>   <ellipse cx="380" cy="230" rx="30" ry="20" class="muscle"/>   <ellipse cx="395" cy="255" rx="22" ry="16" class="muscle"/>   <ellipse cx="445" cy="230" rx="22" ry="16" class="muscle"/>   <text x="70" y="210" class="txt">שכיבות סמיכה על הקיר</text>   <text x="70" y="255" class="txt" style="font-weight:500; font-size:26px; fill:#444">חזה • כתפיים • יד אחורית</text> </svg>`,
+  lunge: `<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">   <defs>     <style>       .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}       .muscle{fill:#e53935;opacity:.95}       .muted{fill:#111;opacity:.05}       .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}     </style>   </defs>   <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>   <circle cx="270" cy="130" r="34" class="line"/>   <path d="M245 132 C250 105, 292 105, 300 130" class="line"/>   <path d="M245 132 C260 165, 285 165, 300 130" class="line"/>   <path d="M270 165 L270 255" class="line"/>   <path d="M270 195 L210 230" class="line"/>   <path d="M270 195 L330 230" class="line"/>   <path d="M235 255 L305 255 L330 310 L210 310 Z" class="line"/>   <path d="M255 310 L210 380" class="line"/>   <path d="M210 380 L170 380" class="line"/>   <path d="M290 310 L360 360" class="line"/>   <path d="M360 360 L400 360" class="line"/>   <ellipse cx="240" cy="335" rx="22" ry="34" class="muscle"/>   <ellipse cx="270" cy="285" rx="30" ry="20" class="muscle"/>   <text x="450" y="210" class="txt">לאנג' קדימה</text>   <text x="450" y="255" class="txt" style="font-weight:500; font-size:26px; fill:#444">ברך אחורית לכיוון הרצפה</text> </svg>`,
+  plank: `<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">   <defs>     <style>       .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}       .muscle{fill:#e53935;opacity:.95}       .muted{fill:#111;opacity:.05}       .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}     </style>   </defs>   <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>   <circle cx="240" cy="190" r="28" class="line"/>   <path d="M220 190 C222 170, 258 170, 262 190" class="line"/>   <path d="M220 190 C232 212, 250 212, 262 190" class="line"/>   <path d="M265 205 L470 250" class="line"/>   <path d="M300 245 L320 300" class="line"/>   <path d="M320 300 L360 300" class="line"/>   <path d="M430 240 L500 260 L490 300 L420 285 Z" class="line"/>   <path d="M470 250 L560 330" class="line"/>   <path d="M560 330 L610 330" class="line"/>   <ellipse cx="385" cy="240" rx="40" ry="18" class="muscle"/>   <ellipse cx="415" cy="246" rx="28" ry="14" class="muscle"/>   <text x="70" y="210" class="txt">פלאנק על אמות</text>   <text x="70" y="255" class="txt" style="font-weight:500; font-size:26px; fill:#444">בטן • ליבה • גב</text> </svg>`,
+  stretch: `<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">   <defs>     <style>       .line{fill:none;stroke:#222;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}       .muscle{fill:#e53935;opacity:.9}       .muted{fill:#111;opacity:.05}       .txt{font:600 34px/1.2 system-ui, -apple-system, Segoe UI, Arial; fill:#222}     </style>   </defs>   <rect x="0" y="0" width="800" height="450" rx="30" class="muted"/>   <circle cx="260" cy="135" r="34" class="line"/>   <path d="M235 136 C240 105, 282 105, 292 135" class="line"/>   <path d="M235 136 C250 170, 278 170, 292 135" class="line"/>   <path d="M260 170 L220 95" class="line"/>   <path d="M260 170 L300 95" class="line"/>   <path d="M260 170 L260 270" class="line"/>   <path d="M225 270 L295 270 L320 330 L200 330 Z" class="line"/>   <path d="M240 330 L220 410" class="line"/>   <path d="M280 330 L300 410" class="line"/>   <ellipse cx="245" cy="180" rx="26" ry="18" class="muscle"/>   <ellipse cx="275" cy="180" rx="26" ry="18" class="muscle"/>   <text x="430" y="210" class="txt">מתיחות ונשימות</text>   <text x="430" y="255" class="txt" style="font-weight:500; font-size:26px; fill:#444">שחרור רגוע • נשימה עמוקה</text> </svg>`
+};
+
+function fmt(sec){
+  sec = Math.max(0, Math.floor(sec));
+  const m = String(Math.floor(sec/60)).padStart(2,'0');
+  const s = String(sec%60).padStart(2,'0');
+  return `${m}:${s}`;
+}
+
+function totalDuration(){
+  return PLAN.reduce((sum, step)=> sum + (step.duration||0), 0);
+}
+
+let idx = 0;
+let remaining = 30;
+let running = false;
+let interval = null;
+
+const elTitle = document.getElementById('exerciseTitle');
+const elNote  = document.getElementById('exerciseNote');
+const elBadge = document.getElementById('phaseBadge');
+const elTime  = document.getElementById('timeLeft');
+const elNext  = document.getElementById('nextName');
+const elTotal = document.getElementById('totalLeft');
+const elProg  = document.getElementById('prog');
+const elImg   = document.getElementById('imgSlot');
+const soundToggle = document.getElementById('sound');
+
+const startBtn = document.getElementById('startBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const resetBtn = document.getElementById('resetBtn');
+const skipBtn  = document.getElementById('skipBtn');
+const listEl   = document.getElementById('list');
+
+function phaseLabel(step){
+  if(step.type === 'rest') return 'מנוחה';
+  if(step.type === 'work') return 'עבודה';
+  if(step.type === 'round') return step.name;
+  if(step.type === 'section') return step.name;
+  if(step.type === 'done') return 'סיום';
+  return 'מוכן';
+}
+
+function beep(){
+  if(!soundToggle.checked) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.value = 880;
+    g.gain.value = 0.06;
+    o.connect(g); g.connect(ctx.destination);
+    o.start();
+    setTimeout(()=>{ o.stop(); ctx.close(); }, 140);
+  } catch(e) {}
+}
+
+function buildList(){
+  listEl.innerHTML = '';
+  PLAN.forEach((st, i)=>{
+    const row = document.createElement('div');
+    row.className = 'item';
+    row.dataset.i = i;
+
+    const left = document.createElement('div');
+    const name = document.createElement('strong');
+    name.textContent = st.name || '—';
+    const note = document.createElement('div');
+    note.style.marginTop = '2px';
+    note.style.color = 'var(--muted)';
+    note.style.fontSize = '12px';
+    note.textContent = st.type === 'rest' ? 'מנוחה' : (st.note || '');
+    left.appendChild(name);
+    left.appendChild(note);
+
+    const right = document.createElement('div');
+    right.style.display = 'flex';
+    right.style.gap = '8px';
+    right.style.alignItems = 'center';
+
+    const pill1 = document.createElement('div');
+    pill1.className = 'pill';
+    pill1.textContent = (st.duration||0) ? fmt(st.duration) : '—';
+
+    const pill2 = document.createElement('div');
+    pill2.className = 'pill';
+    pill2.style.background = 'linear-gradient(90deg, rgba(24,183,197,.12), rgba(181,156,255,.12))';
+    pill2.textContent = st.type === 'work' ? 'עבודה' : (st.type === 'rest' ? 'מנוחה' : (st.type === 'done' ? 'סיום' : 'שלב'));
+
+    right.appendChild(pill1);
+    right.appendChild(pill2);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    row.addEventListener('click', ()=>{
+      stop();
+      setStep(i);
+    });
+
+    listEl.appendChild(row);
+  });
+}
+
+function highlightList(){
+  document.querySelectorAll('.item').forEach(el=>{
+    el.classList.toggle('active', Number(el.dataset.i) === idx);
+  });
+}
+
+function setStep(i){
+  idx = Math.max(0, Math.min(i, PLAN.length-1));
+  const step = PLAN[idx];
+  remaining = step.duration || 0;
+
+  elBadge.textContent = phaseLabel(step);
+  elTitle.textContent = step.name || '—';
+  elNote.textContent  = step.note || '';
+  elTime.textContent  = fmt(remaining);
+
+  const next = PLAN[idx+1];
+  elNext.textContent = next ? next.name : '—';
+
+  const leftTotal = PLAN.slice(idx).reduce((s, st)=> s + (st.duration||0), 0);
+  elTotal.textContent = `סה״כ נותר: ${fmt(leftTotal)}`;
+
+  const svgKey = step.svg || 'warmup';
+  elImg.innerHTML = SVG_MAP[svgKey] || SVG_MAP.warmup;
+
+  const dur = step.duration || 1;
+  elProg.style.width = (dur ? ((dur-remaining)/dur)*100 : 0) + '%';
+
+  const isDone = step.type === 'done';
+  startBtn.disabled = running || isDone;
+  pauseBtn.disabled = !running;
+  skipBtn.disabled  = isDone;
+
+  highlightList();
+}
+
+function tick(){
+  const step = PLAN[idx];
+  if(!step || step.type === 'done'){ stop(); return; }
+  if((step.duration||0) <= 0){ advance(); return; }
+
+  remaining -= 1;
+  elTime.textContent = fmt(remaining);
+
+  const dur = step.duration || 1;
+  elProg.style.width = (dur ? ((dur-remaining)/dur)*100 : 0) + '%';
+
+  if(remaining <= 0){
+    beep();
+    advance();
+  }
+}
+
+function advance(){
+  // Move to next step (skip zero-duration items quickly)
+  let nextIdx = idx + 1;
+  while(nextIdx < PLAN.length && (PLAN[nextIdx].duration||0) === 0 && PLAN[nextIdx].type !== 'done'){ 
+    // Show the section/round briefly (no timer) by just setting and immediately moving on
+    idx = nextIdx;
+    setStep(idx);
+    nextIdx += 1;
+  }
+  if(nextIdx >= PLAN.length) {
+    stop();
+    setStep(PLAN.length-1);
+    return;
+  }
+  setStep(nextIdx);
+}
+
+function start(){
+  if(running) return;
+  running = true;
+  startBtn.disabled = true;
+  pauseBtn.disabled = false;
+  skipBtn.disabled  = false;
+  interval = setInterval(tick, 1000);
+}
+
+function stop(){
+  running = false;
+  startBtn.disabled = false;
+  pauseBtn.disabled = true;
+  skipBtn.disabled  = false;
+  if(interval) clearInterval(interval);
+  interval = null;
+}
+
+function reset(){
+  stop();
+  setStep(0);
+}
+
+startBtn.addEventListener('click', ()=> start());
+pauseBtn.addEventListener('click', ()=> stop());
+resetBtn.addEventListener('click', ()=> reset());
+skipBtn.addEventListener('click', ()=>{ beep(); advance(); });
+
+buildList();
+setStep(0);
+elTotal.textContent = `סה״כ נותר: ${fmt(totalDuration())}`;
+</script>
+</body>
+</html>
